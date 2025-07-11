@@ -23,7 +23,7 @@ Before launching your dedicated server, it's best to prepare everything on a loc
 > ⚠️ These should NOT be added to your final server modlist — they are for setup ONLY.
 
 * [Mod Manager](https://steamcommunity.com/sharedfiles/filedetails/?id=2694448564)
-* [Mod Manager:Swrver](https://steamcommunity.com/sharedfiles/filedetails/?id=2725216703)
+* [Mod Manager:Server](https://steamcommunity.com/sharedfiles/filedetails/?id=2725216703)
 * [Mod Manager Sync](https://steamcommunity.com/sharedfiles/filedetails/?id=2945221351)
 * [Mod Load Order Enhanced](https://steamcommunity.com/sharedfiles/filedetails/?id=3180893708)
 * [Mod Template Exporter](https://steamcommunity.com/sharedfiles/filedetails/?id=3112199765)
@@ -46,12 +46,19 @@ Before launching your dedicated server, it's best to prepare everything on a loc
 
 ### 1. Launch PZ and go to **Host > Manage Settings > Create New Settings**
 
+<img width="1920" height="1080" alt="ProjectZomboid64_2uhuZb2rVd" src="https://github.com/user-attachments/assets/43ed4b82-3e6f-491b-aa6c-a7d428551999" />
+
 * Choose a **name** for your server settings (avoid special characters and trailing spaces)
+
+<img width="1920" height="1080" alt="ProjectZomboid64_pEJspxh2HY" src="https://github.com/user-attachments/assets/ab85bc93-9600-49e2-8b32-eabbc332701a" />
+<img width="1920" height="1080" alt="ProjectZomboid64_72VCVe2MsN" src="https://github.com/user-attachments/assets/0f9220a5-8e96-4ef8-ab5b-fbdafff7547f" />
 
 ### 2. Configure Base Settings
 
 * Back out to the main menu.
 * Go to **Mods > Server tab** (bottom-right).
+
+<img width="1920" height="1080" alt="ProjectZomboid64_AukRZxu67R" src="https://github.com/user-attachments/assets/ca00a532-463c-48bb-9a2e-15eae207c2fc" />
 
   * If it doesn’t show, you haven’t properly subscribed/activated the utility mods.
 
@@ -66,8 +73,14 @@ Before launching your dedicated server, it's best to prepare everything on a loc
 
 ### 4. Sort and Finalize
 
+<img width="1920" height="1080" alt="ProjectZomboid64_HgkQ8eHlhe" src="https://github.com/user-attachments/assets/69349e6a-b802-4842-9b55-474bf7ff1d1d" />
+<img width="1920" height="1080" alt="ProjectZomboid64_hSlQoBlxBH" src="https://github.com/user-attachments/assets/dd03ae6d-a0e5-45f9-86f4-4f12bc657c56" />
+
+
 * Use **Mod Load Order Enhanced > Sort** to auto-fix load order
 * Click **Save** when finished
+
+<img width="1920" height="1080" alt="ProjectZomboid64_L3IFeBToFj" src="https://github.com/user-attachments/assets/2827908b-8796-445f-bfa9-7fea556d8205" />
 
 ### 5. Configure Remaining Server Settings
 
@@ -226,3 +239,191 @@ If you receive mod-related errors, check:
 ---
 
 Enjoy your zombie apocalypse!
+
+
+Here is the **Troubleshooting** section in **Markdown** format, ready to be pasted at the end of your GitHub README:
+
+````markdown
+## 🔧 Troubleshooting
+
+Even a properly configured server can hit snags. Below are common issues and methods to troubleshoot them effectively.
+
+---
+
+### 🚨 1. Server Shuts Down Immediately After Starting
+
+**Symptoms:**
+- Docker container starts but exits after a few seconds.
+- No server is running despite apparently correct setup.
+
+**Solutions:**
+- **Check container logs** via Docker:
+  ```bash
+  docker logs pzserver
+````
+
+Look for messages like:
+
+* `"Steam query port bind failed"`
+
+* `"Workshop item failed to load"`
+
+* `"mod ... not found"` or `"version mismatch"`
+
+* **Check internal logs**:
+  Navigate to logs inside the container:
+
+  ```
+  /server-data/logs/
+  ```
+
+  Look for:
+
+  * `console.txt`
+  * `coop-console.txt`
+  * `server-console.txt`
+
+* **Common causes:**
+
+  * Missing or invalid `ServerName.ini`, `SandboxVars.lua`, or `SpawnRegions.lua`.
+  * Mods enabled in `.ini` but not present in the server's `Mods` or `WorkshopItems` list.
+  * Wrong server name in Docker `.env` or volume folder.
+
+---
+
+### 🔄 2. Server Loads with No Mods or Vanilla Settings
+
+**Symptoms:**
+
+* Server launches but no mods are present.
+* Sandbox settings don’t match expectations.
+
+**Solutions:**
+
+* Ensure you’ve copied:
+
+  * `ServerName.ini`
+  * `SandboxVars.lua`
+  * `SpawnRegions.lua`
+  * All must match the name defined in `SERVER_NAME` or `.env`.
+
+* Files should be located in:
+
+  ```
+  /server-data/Server/
+  ```
+
+* If using a collection:
+
+  * Validate mod IDs and workshop IDs:
+
+    ```ini
+    Mods=modA;modB;modC
+    WorkshopItems=12345678;87654321
+    ```
+  * Use: [https://getcollectionids.moonguy.me](https://getcollectionids.moonguy.me)
+
+---
+
+### 🔐 3. Clients Get Kicked for Anticheat Violations
+
+**Symptoms:**
+
+* Players get kicked shortly after joining.
+* Logs show `Kicked user for AntiCheatProtectionType(x)`.
+
+**Solutions:**
+
+* Disable problem anticheat protections in `ServerName.ini`:
+
+  ```ini
+  AntiCheatProtectionType1=false
+  AntiCheatProtectionType2=false
+  AntiCheatProtectionType12=false
+  AntiCheatProtectionType13=false
+  ```
+
+* Only disable what’s needed. For private/whitelisted servers, it’s okay to disable more.
+
+---
+
+### 📦 4. Workshop Mods Not Downloading in Docker
+
+**Symptoms:**
+
+* Server fails to start or loops on mod download.
+* Log shows `ERROR: Download failed for item`.
+
+**Solutions:**
+
+* Ensure internet access for the container.
+
+* Validate WorkshopItems are reachable.
+
+* Check disk space:
+
+  ```bash
+  df -h
+  ```
+
+* If mod is broken/removed from the Steam Workshop, you may need to remove it or find a replacement.
+
+---
+
+### 📁 5. Mods Show Red in the Mod Menu or Fail to Load
+
+**Symptoms:**
+
+* Mods appear red in the in-game host UI.
+* Server errors like `mod not found`.
+
+**Solutions:**
+
+* Ensure all dependencies are subscribed and activated on the host (Windows) machine.
+* In the mod manager:
+
+  * Use **“From Active”**
+  * Click **“Mod Load Order Enhanced”** → **Sort**
+  * Check that no mods are red
+  * Restart game if any changes are made
+
+---
+
+### 🧠 6. Wrong Save Directory or World Not Loading
+
+**Symptoms:**
+
+* Server launches, but progress or world is missing.
+
+**Solutions:**
+
+* Ensure correct Docker volume is mounted:
+
+  ```yaml
+  volumes:
+    - ./server-data:/server-data
+  ```
+
+* Confirm folder and file names match `SERVER_NAME` in `.env`:
+
+  ```
+  /server-data/Server/<ServerName>.ini
+  ```
+
+* Avoid:
+
+  * Trailing spaces
+  * Special characters
+  * Mismatched capitalization
+
+---
+
+### 📸 Screenshots (Coming Soon)
+
+Leave space for screenshots where appropriate:
+
+* 📷 **Screenshot A** – In-game Host Setup Menu
+* 📷 **Screenshot B** – Mod Load Order Example
+* 📷 **Screenshot C** – Docker Volume Structure
+
+---
