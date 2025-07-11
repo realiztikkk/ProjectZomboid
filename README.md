@@ -247,7 +247,6 @@ Even a properly configured server can hit snags. Below are common issues and met
 - **Check container logs** via Docker:
   ```bash
   docker logs pzserver
-````
 
 Look for messages like:
 
