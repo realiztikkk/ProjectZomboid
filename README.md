@@ -242,7 +242,6 @@ Enjoy your zombie apocalypse!
 
 --------------------------------------------------------------------------------------------
 
-````markdown
 ## 🔧 Troubleshooting
 
 Even a properly configured server can hit snags. Below are common issues and methods to troubleshoot them effectively.
