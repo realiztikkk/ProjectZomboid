@@ -212,22 +212,6 @@ If you receive mod-related errors, check:
 
 ---
 
-## 📸 Screenshot References (add these later)
-
-* `compose_setup.png`: Example Docker Compose file
-* `server_ini_config.png`: Annotated `.ini` settings
-* `pz_host_config.png`: In-game Host config UI
-* `mod_order_sort.png`: Mod Load Order Enhanced UI
-
----
-
-## 🧰 Troubleshooting
-
-* **Red mods** in the list? Check subscriptions, dependencies, versions.
-* **Server won’t start?** Check Docker volumes and file paths.
-* **Player can't join?** Check for mod mismatches or `AntiCheat` issues.
-* **Mods not loading?** Ensure `WorkshopItems=` and `Mods=` are correct in the `.ini`.
-
 ---
 
 ## ✅ Final Notes
@@ -242,7 +226,12 @@ Enjoy your zombie apocalypse!
 
 --------------------------------------------------------------------------------------------
 
-## 🔧 Troubleshooting
+
+
+
+
+
+## 🔧 🧰  Troubleshooting 🧰 
 
 Even a properly configured server can hit snags. Below are common issues and methods to troubleshoot them effectively.
 
