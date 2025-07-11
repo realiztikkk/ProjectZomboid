@@ -403,3 +403,6 @@ Look for messages like:
   * Mismatched capitalization
 
 ---
+
+### 📔 Sources
+[PzWIki](https://pzwiki.net/wiki/Dedicated_server)
