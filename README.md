@@ -240,8 +240,7 @@ If you receive mod-related errors, check:
 
 Enjoy your zombie apocalypse!
 
-
-Here is the **Troubleshooting** section in **Markdown** format, ready to be pasted at the end of your GitHub README:
+--------------------------------------------------------------------------------------------
 
 ````markdown
 ## 🔧 Troubleshooting
@@ -415,15 +414,5 @@ Look for messages like:
   * Trailing spaces
   * Special characters
   * Mismatched capitalization
-
----
-
-### 📸 Screenshots (Coming Soon)
-
-Leave space for screenshots where appropriate:
-
-* 📷 **Screenshot A** – In-game Host Setup Menu
-* 📷 **Screenshot B** – Mod Load Order Example
-* 📷 **Screenshot C** – Docker Volume Structure
 
 ---
